@@ -83,14 +83,16 @@
         <a-video src="#penguin" 
                 position="0 0 0" 
                 rotation="-90 0 0"
-                width="4" 
-                height="4"></a-video>
+                width="0.562" 
+                height="1"></a-video>
       </a-marker>
       
       <a-entity camera></a-entity>
     </a-scene>
     
     <script>
+
+      
       document.addEventListener("DOMContentLoaded", function() {
         const debugInfo = document.getElementById('debug-info');
         const scene = document.querySelector('a-scene');
@@ -150,6 +152,51 @@
           updateDebug('User clicked. Trying to play video...');
         });
       });
+
+      document.addEventListener("DOMContentLoaded", function() {
+  const video = document.querySelector('#penguin');
+  
+  // Wait for the video metadata to load
+  video.addEventListener('loadedmetadata', function() {
+    const width = video.videoWidth;
+    const height = video.videoHeight;
+    const aspectRatio = width / height;
+    
+    console.log('Video dimensions:', width, 'x', height);
+    console.log('Aspect ratio:', aspectRatio.toFixed(3));
+    console.log('Common ratio:', getCommonAspectRatio(aspectRatio));
+    
+    // Update debug info with aspect ratio
+    const debugInfo = document.getElementById('debug-info');
+    debugInfo.textContent += ` | Video: ${width}x${height}, Ratio: ${aspectRatio.toFixed(2)}`;
+    
+    // Optional: Automatically set the a-video element dimensions to match aspect ratio
+    const aVideoElements = document.querySelectorAll('a-video');
+    aVideoElements.forEach(el => {
+      el.setAttribute('width', '1');
+      el.setAttribute('height', (1 / aspectRatio).toFixed(4));
+    });
+  });
+  
+      // Helper function to identify common aspect ratios
+      function getCommonAspectRatio(ratio) {
+        const ratios = {
+          '1.333': '4:3',
+          '1.778': '16:9',
+          '1.6': '16:10',
+          '2.35': '2.35:1',
+          '1.85': '1.85:1',
+          '1': '1:1'
+        };
+        
+        // Find the closest match
+        let closest = Object.keys(ratios).reduce((prev, curr) => {
+          return Math.abs(parseFloat(curr) - ratio) < Math.abs(parseFloat(prev) - ratio) ? curr : prev;
+        });
+        
+        return ratios[closest];
+      }
+    });
     </script>
   </body>
 </html>
