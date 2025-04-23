@@ -1,23 +1,48 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   </head>
   <body>
+
+    <!-- creating the AR scene, assets, camera positioning, and video object  -->
     <a-scene mindar-image="imageTargetSrc: ./targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-
       <a-assets>
-        <video id="video-collage" autoplay loop="true" src="remix-design-history.mp4"></video>
+        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="video-collage" autoplay muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742393143/remixin-design-history-480-compressed_zp5nrz.mp4"></video>
       </a-assets>
-
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
       <a-entity mindar-image-target="targetIndex: 0">
         <!-- <a-plane color="blue" opaciy="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane> -->
-        <a-video src="#video-collage" width="0.5625" height="1" position="0 0 0"></a-video>
+        <a-video src="#video-collage" width="1" height="1.778" position="0 0 0"></a-video>
       </a-entity>
-
     </a-scene>
+
+    <!-- to auto load the video (as autoplay features are blocked from most web browsers) -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const sceneEl = document.querySelector('a-scene');
+        const videoEl = document.querySelector('#video-collage');
+        
+        sceneEl.addEventListener('loaded', function() {
+          // Set video to unmuted
+          videoEl.muted = false;
+          
+          // Try to play the video
+          videoEl.play().catch(function(error) {
+            console.log('Video play failed:', error);
+            
+            // Add a backup - try to play on first user interaction
+            document.addEventListener('click', function playOnClick() {
+              videoEl.muted = false;
+              videoEl.play().catch(e => console.log('Play attempt after click failed:', e));
+              document.removeEventListener('click', playOnClick);
+            }, { once: true });
+          });
+        });
+      });
+    </script>
+
   </body>
 </html>
