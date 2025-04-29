@@ -31,12 +31,12 @@
         const videoEl = document.querySelector('#allstar');
         
         sceneEl.addEventListener('loaded', function() {
-          // Set video to unmuted
-          videoEl.muted = false;
+          // // Set video to unmuted
+          // videoEl.muted = false;
           
-          // Try to play the video
-          videoEl.play().catch(function(error) {
-            console.log('Video play failed:', error);
+          // // Try to play the video
+          // videoEl.play().catch(function(error) {
+          //   console.log('Video play failed:', error);
             
             // Add a backup - try to play on first user interaction
             document.addEventListener('click', function playOnClick() {
@@ -46,7 +46,7 @@
             }, { once: true });
           });
         });
-      });
+      // });
     </script>
 
   </body>
