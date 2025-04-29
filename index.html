@@ -28,7 +28,8 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const sceneEl = document.querySelector('a-scene');
-        const videoEl = document.querySelector('#allstar');
+        const allstar = document.querySelector('#allstar');
+        const remixin = document.querySelector('#remxin');
         
         sceneEl.addEventListener('loaded', function() {
           // // Set video to unmuted
@@ -39,12 +40,22 @@
           //   console.log('Video play failed:', error);
             
             // Add a backup - try to play on first user interaction
-            document.addEventListener('click', function playOnClick() {
-              videoEl.muted = false;
-              videoEl.play().catch(e => console.log('Play attempt after click failed:', e));
+          document.addEventListener('click', function playOnClick() {
+            allstar.muted = false;
+            allstar.play().catch(e => console.log('Play attempt after click failed:', e));
+            document.removeEventListener('click', playOnClick);
+          }, { once: true });
+
+
+          document.addEventListener('click', function playOnClick() {
+              remixin.muted = false;
+              remixin.play().catch(e => console.log('Play attempt after click failed:', e));
               document.removeEventListener('click', playOnClick);
             }, { once: true });
-          });
+
+        });
+
+        
         });
       // });
     </script>
