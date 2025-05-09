@@ -4,61 +4,60 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  </head>
-  <body>
 
+    
+
+  </head>
     <!-- creating the AR scene, assets, camera positioning, and video object  -->
     <a-scene mindar-image="imageTargetSrc: ./targets-2.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+
       <a-assets>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="remixin" autoplay muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742393143/remixin-design-history-480-compressed_zp5nrz.mp4"></video>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="allstar" autoplay muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742413804/allstar_remix_amkxf9.mp4"></video>
       </a-assets>
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+
       <a-entity mindar-image-target="targetIndex: 0">
-        <!-- <a-plane color="blue" opaciy="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane> -->
-        <a-video src="#remixin" width="1" height="1.778" position="0 0 0"></a-video>
+        <a-video id="remixin-vid" src="#remixin" width="1" height="1.778" position="0 0 0"></a-video>
+        <a-plane id="example-plane" class="clickable" color="blue" opaciy="0.5" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
+
+
+
       <a-entity mindar-image-target="targetIndex: 1">
         <!-- <a-plane color="blue" opaciy="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane> -->
         <a-video src="#allstar" width="1.778" height="1" position="-2 0 0"></a-video>
       </a-entity>
-    </a-scene>
 
-    <!-- to auto load the video (as autoplay features are blocked from most web browsers) -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const sceneEl = document.querySelector('a-scene');
-        const allstar = document.querySelector('#allstar');
-        const remixin = document.querySelector('#remxin');
+  </a-scene>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // detect click event
+      const examplePlane = document.querySelector('#example-plane');
+      examplePlane.addEventListener("click", event => {
+        console.log("plane click");
+        window.open("https://youtube.com/playlist?list=PLZFNfQGtHiJkfHOBP742jDTdeJmM8AQoE&si=_tbihQS-zM-ujTXK", "_self");
+      });
+
+      const sceneEl = document.querySelector('a-scene');
+      const allstar = document.querySelector('#allstar');
+      const remixin = document.querySelector('#remixin');
+              
+      sceneEl.addEventListener('loaded', function() {
+        // Handle video autoplay
+        document.addEventListener('click', function playOnClick() {
+          remixin.muted = false;
+          remixin.play().catch(e => console.log('Play attempt after click failed:', e));
+          allstar.muted = false;
+          allstar.play().catch(e => console.log('Play attempt after click failed:', e));
+          document.removeEventListener('click', playOnClick);
+        }, { once: true });
         
-        sceneEl.addEventListener('loaded', function() {
-          // // Set video to unmuted
-          // videoEl.muted = false;
-          
-          // // Try to play the video
-          // videoEl.play().catch(function(error) {
-          //   console.log('Video play failed:', error);
-            
-            // Add a backup - try to play on first user interaction
-          document.addEventListener('click', function playOnClick() {
-            allstar.muted = false;
-            allstar.play().catch(e => console.log('Play attempt after click failed:', e));
-            document.removeEventListener('click', playOnClick);
-          }, { once: true });
-
-
-          document.addEventListener('click', function playOnClick() {
-              remixin.muted = false;
-              remixin.play().catch(e => console.log('Play attempt after click failed:', e));
-              document.removeEventListener('click', playOnClick);
-            }, { once: true });
-
-        });
-
-        
-        });
-      // });
-    </script>
+      });
+    });
+  </script>
 
   </body>
 </html>
