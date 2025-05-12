@@ -78,17 +78,18 @@
 
       //////////////////////////////////////////////////////////////////////////////////////////
       // allstar marker functionality
-      const allstar = document.querySelector('#allstar');
+      const allstar = document.querySelector('#allstar-target');
+      const allstar_target = document.querySelector('#allstar');
       const allstar_yt_playlist = "https://youtube.com/playlist?list=PLZFNfQGtHiJkfHOBP742jDTdeJmM8AQoE&si=_tbihQS-zM-ujTXK";
       // detect target found
-      allstar.addEventListener("targetFound", event => {
+      allstar_target.addEventListener("targetFound", event => {
         console.log("allstar target found");
         allstar.muted = false;
         allstar.play().catch(e => console.log('Play attempt fail', e));
       });
 
       // detect target lost
-      allstar.addEventListener("targetLost", event => {
+      allstar_target.addEventListener("targetLost", event => {
         console.log("allstar target lost");
         allstar.pause().catch(e => console.log('pause attempt fail', e));
       });
@@ -104,16 +105,17 @@
       //////////////////////////////////////////////////////////////////////////////////////////
       // amb marker functionality
       const amb = document.querySelector('#amb');
+      const amb_target = document.querySelector('#amb-target');
       const amb_yt_playlist = "https://youtube.com/playlist?list=PLZFNfQGtHiJlLzF0K98KrtZ2FHwNwejD6&si=sTaENt1G2qz6htXD";
       // detect target found
-      amb.addEventListener("targetFound", event => {
+      amb_target.addEventListener("targetFound", event => {
         console.log("amb target found");
         amb.muted = false;
         amb.play().catch(e => console.log('Play attempt fail', e));
       });
 
       // detect target lost
-      amb.addEventListener("targetLost", event => {
+      amb_target.addEventListener("targetLost", event => {
         console.log("amb target lost");
         amb.pause().catch(e => console.log('pause attempt fail', e));
       });
