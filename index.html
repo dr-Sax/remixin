@@ -13,22 +13,28 @@
       <a-assets>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="remixin" autoplay muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742393143/remixin-design-history-480-compressed_zp5nrz.mp4"></video>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="allstar" autoplay muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742413804/allstar_remix_amkxf9.mp4"></video>
+        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="amb" autoplay muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006497/amb-vid_1_b8b3vw.mp4"></video>
       </a-assets>
 
       <!-- camera setup for mobile with cursors for augment object clicking response -->
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
 
       <!-- Remixin Page Contents -->
-      <a-entity id = "remixin-target" mindar-image-target="targetIndex: 0">
+      <a-entity id = "remixin-target" mindar-image-target="targetIndex: 2">
         <a-video id="remixin-vid" src="#remixin" width="1" height="1.778" position="0 0 0"></a-video>
-        <a-plane src = "remixin-playlist-img.png" id="remixin-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        <a-plane src = "playlist_imgs/remixin-playlist-img.png" id="remixin-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
       <!-- allstar Page Contents -->
-      <a-entity id = "allstar-target" mindar-image-target="targetIndex: 1">
+      <a-entity id = "allstar-target" mindar-image-target="targetIndex: 0">
         <a-video src="#allstar" width="1.778" height="1" position="-2 0 0"></a-video>
-        <a-plane src = "allstar-playlist-img.png" id="allstar-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        <a-plane src = "playlist_imgs/allstar-playlist-img.png" id="allstar-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+      </a-entity>
 
+      <!-- amb Page Contents -->
+      <a-entity id = "amb-target" mindar-image-target="targetIndex: 1">
+        <a-video src="#amb" width="1.778" height="1" position="-2 0 0"></a-video>
+        <a-plane src = "playlist_imgs/amb-web-cutup-img.png" id="amb-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
   </a-scene>
@@ -92,6 +98,31 @@
       allstar_ref_plane.addEventListener("click", event => {
         console.log("plane click");
         window.open(allstar_yt_playlist, "_self");
+      });
+      //////////////////////////////////////////////////////////////////////////////////////////
+
+      //////////////////////////////////////////////////////////////////////////////////////////
+      // amb marker functionality
+      const amb = document.querySelector('#amb');
+      const amb_yt_playlist = "https://youtube.com/playlist?list=PLZFNfQGtHiJlLzF0K98KrtZ2FHwNwejD6&si=sTaENt1G2qz6htXD";
+      // detect target found
+      amb.addEventListener("targetFound", event => {
+        console.log("amb target found");
+        amb.muted = false;
+        amb.play().catch(e => console.log('Play attempt fail', e));
+      });
+
+      // detect target lost
+      amb.addEventListener("targetLost", event => {
+        console.log("amb target lost");
+        amb.pause().catch(e => console.log('pause attempt fail', e));
+      });
+
+      // detect click event
+      const amb_ref_plane = document.querySelector('#amb-ref-plane');
+      amb_ref_plane.addEventListener("click", event => {
+        console.log("plane click");
+        window.open(amb_yt_playlist, "_self");
       });
       //////////////////////////////////////////////////////////////////////////////////////////
 
