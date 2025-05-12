@@ -7,7 +7,7 @@
 
   </head>
     <!-- creating the AR scene, assets, camera positioning, and video object  -->
-    <a-scene mindar-image="imageTargetSrc: ./targets-2.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-scene mindar-image="imageTargetSrc: ./targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
 
       <!-- loading video assets -->
       <a-assets>
@@ -34,7 +34,7 @@
       <!-- amb Page Contents -->
       <a-entity id = "amb-target" mindar-image-target="targetIndex: 1">
         <a-video src="#amb" width="1.778" height="1" position="-2 0 0"></a-video>
-        <a-plane src = "playlist_imgs/amb-web-cutup-img.png" id="amb-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        <a-plane src = "playlist_imgs/remixin-playlist-img.png" id="amb-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
   </a-scene>
