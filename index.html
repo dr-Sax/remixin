@@ -52,8 +52,7 @@
       <a-assets>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="remixin" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742393143/remixin-design-history-480-compressed_zp5nrz.mp4"></video>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="allstar-web-cut" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006533/allstar-web-cutup-vid_fmdatg.mp4"></video>
-        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="allstar" loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742413804/allstar_remix_amkxf9.mp4"></video>
-        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="amb" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006497/amb-vid_1_b8b3vw.mp4"></video>
+        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="allstar" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747106675/allstar_remix_recoded_vmp566.mp4"></video>        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="amb" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006497/amb-vid_1_b8b3vw.mp4"></video>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="amb-web-cut" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006644/amb-web-cutup_full_ozgxuv.mp4"></video>
 
       </a-assets>
@@ -69,8 +68,8 @@
 
       <!-- allstar Page Contents -->
       <a-entity id = "allstar-target" mindar-image-target="targetIndex: 0">
-        <a-video src="#allstar" width="1.778" height="1" position="0.5 -1.25 0"></a-video>
         <a-video src="#allstar-web-cut" width="1" height="1.5" position="1 0 0"></a-video>
+        <a-video src="#allstar" width="1.778" height="1" position=".5 -1.25 0"></a-video>
         <a-plane src = "playlist_imgs/allstar-playlist-img.png" id="allstar-ref-plane" class="clickable" position="0.5 1.05 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
@@ -127,14 +126,6 @@
           arSystem.start();
         }
       });
-
-      // Add this after your existing event listeners
-      document.addEventListener('touchstart', function() {
-        if (allstar && !allstar.muted && allstar.paused === false) {
-          allstar.muted = false;
-          console.log("Attempted to unmute via user gesture");
-        }
-      }, {once: true});
       
       //////////////////////////////////////////////////////////////////////////////////////////
       // remixin marker functionality
@@ -174,18 +165,9 @@
       // detect target found
       allstar_target.addEventListener("targetFound", event => {
         console.log("allstar target found");
-
+        allstar.muted = false;
         allstar_web_cut.muted = true;
-        // Add a small delay before unmuting to ensure the video has started playing
-        allstar.play()
-          .then(() => {
-            // Set a small timeout to ensure the video has actually started playing
-            setTimeout(() => {
-              allstar.muted = false;
-              console.log("Unmuted allstar video");
-            }, 100);
-          })
-          .catch(e => console.log('Play attempt fail', e));
+        allstar.play().catch(e => console.log('Play attempt fail', e));
         allstar_web_cut.play().catch(e => console.log('Play attempt fail', e));
       });
 
