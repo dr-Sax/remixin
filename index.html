@@ -127,6 +127,14 @@
           arSystem.start();
         }
       });
+
+      // Add this after your existing event listeners
+      document.addEventListener('touchstart', function() {
+        if (allstar && !allstar.muted && allstar.paused === false) {
+          allstar.muted = false;
+          console.log("Attempted to unmute via user gesture");
+        }
+      }, {once: true});
       
       //////////////////////////////////////////////////////////////////////////////////////////
       // remixin marker functionality
