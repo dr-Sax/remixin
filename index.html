@@ -113,6 +113,7 @@
         
         // Preload videos - important for mobile browsers
         videos.forEach(video => {
+          video.muted = true;
           video.load();
           
           // Try to play and immediately pause to satisfy user interaction requirement
@@ -165,9 +166,18 @@
       // detect target found
       allstar_target.addEventListener("targetFound", event => {
         console.log("allstar target found");
-        allstar.muted = false;
+
         allstar_web_cut.muted = true;
-        allstar.play().catch(e => console.log('Play attempt fail', e));
+        // Add a small delay before unmuting to ensure the video has started playing
+        allstar.play()
+          .then(() => {
+            // Set a small timeout to ensure the video has actually started playing
+            setTimeout(() => {
+              allstar.muted = false;
+              console.log("Unmuted allstar video");
+            }, 100);
+          })
+          .catch(e => console.log('Play attempt fail', e));
         allstar_web_cut.play().catch(e => console.log('Play attempt fail', e));
       });
 
