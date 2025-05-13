@@ -42,7 +42,7 @@
   <body>
     <!-- Start button overlay -->
     <div id="startButton">
-      <button>Tap to Start AR Experience</button>
+      <button>Tap to Start magARzine</button>
     </div>
     
     <!-- creating the AR scene, assets, camera positioning, and video object  -->
@@ -51,8 +51,11 @@
       <!-- loading video assets -->
       <a-assets>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="remixin" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742393143/remixin-design-history-480-compressed_zp5nrz.mp4"></video>
+        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="allstar-web-cut" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006533/allstar-web-cutup-vid_fmdatg.mp4"></video>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="allstar" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1742413804/allstar_remix_amkxf9.mp4"></video>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="amb" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006497/amb-vid_1_b8b3vw.mp4"></video>
+        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="amb-web-cut" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006644/amb-web-cutup_full_ozgxuv.mp4"></video>
+
       </a-assets>
 
       <!-- camera setup for mobile with cursors for augment object clicking response -->
@@ -60,20 +63,22 @@
 
       <!-- Remixin Page Contents -->
       <a-entity id = "remixin-target" mindar-image-target="targetIndex: 2">
-        <a-video id="remixin-vid" src="#remixin" width="1" height="1.778" position="0 0 0"></a-video>
-        <a-plane src = "playlist_imgs/remixin-playlist-img.png" id="remixin-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        <a-video id="remixin-vid" src="#remixin" width="1" height="1.778" position="1 0 0"></a-video>
+        <a-plane src = "playlist_imgs/remixin-playlist-img.png" id="remixin-ref-plane" class="clickable" position="0 1 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
       <!-- allstar Page Contents -->
       <a-entity id = "allstar-target" mindar-image-target="targetIndex: 0">
-        <a-video src="#allstar" width="1.778" height="1" position="-2 0 0"></a-video>
-        <a-plane src = "playlist_imgs/allstar-playlist-img.png" id="allstar-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        <a-video src="#allstar-web-cut" width="1" height="1.5" position="1 0 0"></a-video>
+        <a-video src="#allstar" width="1.778" height="1" position=".5 -1.25 0"></a-video>
+        <a-plane src = "playlist_imgs/allstar-playlist-img.png" id="allstar-ref-plane" class="clickable" position="0.5 1.05 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
       <!-- amb Page Contents -->
       <a-entity id = "amb-target" mindar-image-target="targetIndex: 1">
-        <a-video src="#amb" width="1.778" height="1" position="-2 0 0"></a-video>
-        <a-plane src = "playlist_imgs/remixin-playlist-img.png" id="amb-ref-plane" class="clickable" position="0 2 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        <a-video src="#amb" width="1.778" height="1" position="0.5 -1.25 0"></a-video>
+        <a-video src="#amb-web-cut" width="1" height="1.5" position="1 0 0"></a-video>
+        <a-plane src = "playlist_imgs/amb-playlist-img.png" id="amb-ref-plane" class="clickable" position="0.5 1.05 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
   </a-scene>
@@ -153,6 +158,7 @@
       //////////////////////////////////////////////////////////////////////////////////////////
       // allstar marker functionality
       const allstar = document.querySelector('#allstar');
+      const allstar_web_cut = document.querySelector('#allstar-web-cut');
       const allstar_target = document.querySelector('#allstar-target');
       const allstar_yt_playlist = "https://youtube.com/playlist?list=PLZFNfQGtHiJkfHOBP742jDTdeJmM8AQoE&si=_tbihQS-zM-ujTXK";
       
@@ -160,13 +166,16 @@
       allstar_target.addEventListener("targetFound", event => {
         console.log("allstar target found");
         allstar.muted = false;
+        allstar_web_cut.muted = true;
         allstar.play().catch(e => console.log('Play attempt fail', e));
+        allstar_web_cut.play().catch(e => console.log('Play attempt fail', e));
       });
 
       // detect target lost
       allstar_target.addEventListener("targetLost", event => {
         console.log("allstar target lost");
         allstar.pause().catch(e => console.log('pause attempt fail', e));
+        allstar_web_cut.pause().catch(e => console.log('pause attempt fail', e));
       });
 
       // detect click event
@@ -180,6 +189,7 @@
       //////////////////////////////////////////////////////////////////////////////////////////
       // amb marker functionality
       const amb = document.querySelector('#amb');
+      const amb_web_cut = document.querySelector('#amb-web-cut');
       const amb_target = document.querySelector('#amb-target');
       const amb_yt_playlist = "https://youtube.com/playlist?list=PLZFNfQGtHiJlLzF0K98KrtZ2FHwNwejD6&si=sTaENt1G2qz6htXD";
       
@@ -187,13 +197,16 @@
       amb_target.addEventListener("targetFound", event => {
         console.log("amb target found");
         amb.muted = false;
+        amb_web_cut.muted = true;
         amb.play().catch(e => console.log('Play attempt fail', e));
+        amb_web_cut.play().catch(e => console.log('Play attempt fail', e));
       });
 
       // detect target lost
       amb_target.addEventListener("targetLost", event => {
         console.log("amb target lost");
         amb.pause().catch(e => console.log('pause attempt fail', e));
+        amb_web_cut.pause().catch(e => console.log('pause attempt fail', e));
       });
 
       // detect click event
