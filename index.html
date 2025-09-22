@@ -55,7 +55,7 @@
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="allstar" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747106675/allstar_remix_recoded_vmp566.mp4"></video>        
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="amb" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006497/amb-vid_1_b8b3vw.mp4"></video>
         <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="amb-web-cut" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/v1747006644/amb-web-cutup_full_ozgxuv.mp4"></video>
-        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="tell-a-vision" muted loop="true" src="https://player.cloudinary.com/embed/?cloud_name=dwktorq0n&public_id=tell-a-vision_bqrza8&profile=cld-looping"></video>
+        <video preload="auto" crossorigin="anonymous" webkit-playsinline playsinline id="tell-a-vision" muted loop="true" src="https://res.cloudinary.com/dwktorq0n/video/upload/tell-a-vision_bqrza8.mp4"></video>
       </a-assets>
 
       <!-- camera setup for mobile with cursors for augment object clicking response -->
@@ -226,27 +226,27 @@
       //////////////////////////////////////////////////////////////////////////////////////////
 
             //////////////////////////////////////////////////////////////////////////////////////////
-      // remixin marker functionality
+      // tv marker functionality
       const tv = document.querySelector('#tell-a-vision');
       const tv_target = document.querySelector('#tv-target');
       const tv_donate = "https://givebutter.com/renmatch";
       
       // detect target found
-      remixin_target.addEventListener("targetFound", event => {
+      tv_target.addEventListener("targetFound", event => {
         console.log("remixin target found");
-        remixin.muted = false;
-        remixin.play().catch(e => console.log('Play attempt failed:', e));
+        tv.muted = false;
+        tv.play().catch(e => console.log('Play attempt failed:', e));
       });
 
       // detect target lost
-      remixin_target.addEventListener("targetLost", event => {
+      tv_target.addEventListener("targetLost", event => {
         console.log("remixin target lost");
-        remixin.pause().catch(e => console.log('pause attempt fail', e));
+        tv.pause().catch(e => console.log('pause attempt fail', e));
       });
 
       // detect click event
       const tv_ref_plane = document.querySelector('#tv-ref-plane');
-      remixin_ref_plane.addEventListener("click", event => {
+      tv_ref_plane.addEventListener("click", event => {
         console.log("remxin plane click");
         window.open(tv_donate, "_self");
       });
