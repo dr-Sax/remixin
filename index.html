@@ -82,8 +82,8 @@
 
       <!-- tellavision Page Contents -->
       <a-entity id = "tv-target" mindar-image-target="targetIndex: 3">
-        <a-video src="#tell-a-vision" width="1.778" height="1" position="0.5 -1.25 0"></a-video>
-        <a-plane src = "playlist_imgs/amb-playlist-img.png" id="tv-ref-plane" class="clickable" position="0.5 1.05 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        <a-video src="#tell-a-vision" width="1" height="1.778" position="0.5 -1.25 0"></a-video>
+        <a-plane src = "playlist_imgs/rb-donate.png" id="tv-ref-plane" class="clickable" position="0.5 1.05 0" height="1" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
   </a-scene>
@@ -228,7 +228,7 @@
       // remixin marker functionality
       const tv = document.querySelector('#tell-a-vision');
       const tv_target = document.querySelector('#tv-target');
-      const tv_yt_playlist = "https://youtube.com/playlist?list=PLZFNfQGtHiJmx36POkBNJja83AKyVRRXr&si=3ygW3EGi387CiPov";
+      const tv_donate = "https://givebutter.com/renmatch";
       
       // detect target found
       remixin_target.addEventListener("targetFound", event => {
@@ -247,7 +247,7 @@
       const tv_ref_plane = document.querySelector('#tv-ref-plane');
       remixin_ref_plane.addEventListener("click", event => {
         console.log("remxin plane click");
-        window.open(tv_yt_playlist, "_self");
+        window.open(tv_donate, "_self");
       });
       //////////////////////////////////////////////////////////////////////////////////////////
 
